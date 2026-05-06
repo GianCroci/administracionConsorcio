@@ -21,6 +21,10 @@ namespace Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Usuario>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
             modelBuilder.Entity<Consorcio>()
                 .HasOne(c => c.UsuarioCreador)
                 .WithMany(u => u.Consorcios)        // ← vincula explícitamente

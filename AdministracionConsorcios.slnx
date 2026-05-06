@@ -2,4 +2,5 @@
   <Project Path="AdministracionConsorcios/AdministracionConsorcios.csproj" />
   <Project Path="Data/Data.csproj" Id="2cde0776-2a3e-48a6-9acc-58aefbfdfc4d" />
   <Project Path="Model/Model.csproj" Id="9ddf4700-8949-41e1-94e5-602b39fcaadd" />
+  <Project Path="Servicio/Servicio.csproj" Id="f948adbc-4d79-477a-b8fb-07cb6ce68c04" />
 </Solution>

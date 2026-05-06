@@ -1,5 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using Data;
+using Microsoft.EntityFrameworkCore;
+using Servicio;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ConsorcioContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddScoped<IConsorcioServicio, ConsorcioServicio>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -50,5 +50,7 @@ namespace Model
 
         
         public virtual ICollection<Gasto> Gastos { get; set; }
+
+        public virtual ICollection<Sum> Sums { get; set; }
     }
 }

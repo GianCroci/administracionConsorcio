@@ -1,0 +1,37 @@
+﻿@model DTOs.ViewModels.RegistroViewModel
+@{
+    Layout = "_AnonimoLayout";
+    var returnUrl = Context.Request.Query["ReturnUrl"];
+}
+
+<section class="flex items-center justify-center flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-md">
+        
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Ingresar</h2>
+
+        <form asp-action="ingresar" method="post" asp-route-returnUrl="@returnUrl" class="flex flex-col gap-4">
+            
+            <div class="flex flex-col gap-1">
+                <label asp-for="Email" class="text-sm font-medium text-gray-700"></label>
+                <input asp-for="Email" placeholder="ejemplo@email.com"
+                       class="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <span asp-validation-for="Email" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div class="flex flex-col gap-1">
+                <label asp-for="Password" class="text-sm font-medium text-gray-700">Contraseña</label>
+                <input asp-for="Password" placeholder="Contraseña"
+                       class="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <span asp-validation-for="Password" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div asp-validation-summary="ModelOnly" class="text-red-500 text-sm font-bold"></div>
+
+            <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors mt-2">
+                Ingresar
+            </button>
+
+        </form>
+    </div>
+</section>

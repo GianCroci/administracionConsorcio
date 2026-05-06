@@ -1,8 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_AnonimoLayout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="flex flex-col items-center justify-center flex-1">
+    <div class="text-center">
+        <h1 class="text-3xl font-semibold">Administracion de consorcios</h1>
+        <p class="text-gray-500 mt-2">Un solo lugar, todas tus ubicaciones.</p>
+    </div>
+
+    <div class="text-center mt-6 flex flex-col gap-3">
+        <a asp-controller="login" asp-action="ingresar">Ingresar</a>
+        <a asp-controller="login" asp-action="registrarse">Registrarse</a>
+    </div>
+</section>

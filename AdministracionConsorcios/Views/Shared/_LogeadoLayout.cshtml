@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "_BaseLayout";
+}
+
+<header class="bg-white border-b shadow-sm mb-3">
+    <nav class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
+        
+        <a asp-area="" asp-controller="Home" asp-action="Index"
+               class="text-lg font-semibold text-gray-800">
+            AdministracionConsorcios
+        </a>
+
+        <ul class="flex gap-6">
+            <li>
+                <a asp-area="" asp-controller="Consorcio" asp-action="Index"
+                       class="text-gray-600 hover:text-gray-900 transition-colors">
+                    Consorcio
+                </a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Login" asp-action="Logout"
+                       class="text-gray-600 hover:text-gray-900 transition-colors">
+                    Logout
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+</header>
+
+@RenderBody()
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}
+

@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Model;
 
 namespace AdministracionConsorcios.Controllers
 {
+    [Authorize]
     public class ConsorcioController : Controller
     {
 
@@ -63,6 +66,6 @@ namespace AdministracionConsorcios.Controllers
             return View("Editar", consorcio);
         }
 
-
+        
     }
 }

@@ -1,0 +1,15 @@
+﻿.dataTables_filter{
+    margin-bottom:1rem;
+}
+
+.dataTables_info{
+    margin-top:1rem;
+}
+
+.dataTables_wrapper .dataTables_paginate{
+    margin-top:1rem;
+}
+
+.dataTables_empty{
+    font-size:1.5rem;
+}

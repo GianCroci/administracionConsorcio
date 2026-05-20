@@ -1,0 +1,25 @@
+﻿@using DTOs.ViewModels
+@model ConsorcioViewModel
+@{
+    ViewData["Title"] = "Consorcios";
+    Layout = "_LogeadoLayout";
+}
+
+<section class="flex items-center justify-center p-7 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-7 w-full max-w-4x1">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">¿Esta seguro que desea ELIMINAR el consorcio "@Model.Nombre"</h1>
+            <div class="overflow-x-auto">
+            <div class="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-md justify-center">
+                <form class="md:col-span-2 space-y-4" method="post" asp-action="EliminarConsorcio">
+                    <input type="hidden" asp-for="@Model.Id">
+                    <div class="flex flex-row gap-4 mt-4 justify-center">
+                        <button type="submit" class="flex-1 bg-red-600 text-white font-bold py-2 px-4 rounded-md hover:bg-red-700 transition-colors">Eliminar</button>
+                        <a asp-controller="Consorcio" asp-action="Index" class="flex-1">
+                            <button type="button" class="w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">Cancelar</button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+    </div>
+
+</section>

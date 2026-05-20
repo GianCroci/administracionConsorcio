@@ -1,8 +1,58 @@
-﻿@{
+﻿@using Model
+@model List<Consorcio>
+@{
     ViewData["Title"] = "Consorcios";
     Layout = "_LogeadoLayout";
 }
 
-<h1>Consorcios</h1>
+<section class="flex items-center justify-center p-10 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-10 w-full max-w-4x1">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Listado Consorcios</h1>
+        <div class="overflow-x-auto">
+            <table id="consorciosTable" class="min-w-full text-base text-left border border-gray-200">
 
-<h2 class="text-3xl font-semibold">Hola, @Context.Session.GetString("usuario")</h2>
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 border-b">Nombre</th>
+                        <th class="px-4 py-2 border-b">Provincia</th>
+                        <th class="px-4 py-2 border-b">Ciudad</th>
+                        <th class="px-4 py-2 border-b">Calle</th>
+                        <th class="px-4 py-2 border-b">Unidades</th>
+                        <th class="px-4 py-2 border-b">Expensas</th>
+                        <th class="px-4 py-2 border-b">Gastos</th>
+                        <th class="px-4 py-2 border-b">Ver en Mapa</th>
+                        <th class="px-4 py-2 border-b">Eliminar</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2 border-b hover:underline"><a asp-controller="Consorcio" asp-action="Editar" asp-route-id="@item.Id">@item.Nombre</a></td>
+                            <td class="px-4 py-2 border-b">@item.Provincia.Nombre</td>
+                            <td class="px-4 py-2 border-b">@item.Ciudad</td>
+                            <td class="px-4 py-2 border-b">@item.Calle</td>
+                            <td class="px-4 py-2 border-b text-blue-600 hover:underline"><a href="#">Ver unidades</a></td>
+                            <td class="px-4 py-2 border-b text-blue-600 hover:underline"><a href="#">Ver expensas</a></td>
+                            <td class="px-4 py-2 border-b text-blue-600 hover:underline"><a href="#">Ver Gastos</a></td>
+                            <td class="px-4 py-2 border-b text-blue-600 hover:underline">
+                                <a target="_blank" href="@item.GetGoogleMapsUrl()">
+                                    Ver en mapa
+                                </a>
+                            </td>
+                            <td class="px-4 py-2 border-b">
+                                <a asp-controller="Consorcio" asp-action="Eliminar" asp-route-id="@item.Id">
+                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded transition-colors">
+                                        Eliminar
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</section>

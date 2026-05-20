@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 
 namespace Model
@@ -39,7 +40,7 @@ namespace Model
         [ForeignKey("IdProvincia")]
         public virtual Provincia Provincia { get; set; }
 
-        [Required]
+        
         public int IdUsuarioCreador { get; set; }
 
         [ForeignKey("IdUsuarioCreador")]
@@ -52,5 +53,18 @@ namespace Model
         public virtual ICollection<Gasto> Gastos { get; set; }
 
         public virtual ICollection<Sum> Sums { get; set; }
+
+
+        public string GetGoogleMapsUrl()
+        {
+            if (!Latitud.HasValue || !Longitud.HasValue)
+                return "#";
+
+            var lat = Latitud.Value.ToString(CultureInfo.InvariantCulture);
+            var lon = Longitud.Value.ToString(CultureInfo.InvariantCulture);
+
+            return $"https://www.google.com/maps/search/?api=1&query={lat},{lon}";
+        }
+
     }
 }

@@ -14,6 +14,7 @@ builder.Services.AddDbContext<ConsorcioContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IConsorcioService, ConsorcioService>();
+builder.Services.AddScoped<IUnidadService, UnidadService>();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);

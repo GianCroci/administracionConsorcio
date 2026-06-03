@@ -1,0 +1,49 @@
+﻿@using Model
+@model Unidad
+
+@{
+    ViewData["Title"] = "Eliminar Unidad";
+    Layout = "_LogeadoLayout";
+}
+
+<section class="flex items-center justify-center p-10 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-10 w-full max-w-2xl text-center">
+
+        <div class="mb-4 text-sm text-blue-600 text-left">
+            <a asp-controller="Consorcio" asp-action="Index" class="hover:underline">Mis Consorcios</a>
+            <span> &gt; </span>
+            <a asp-controller="Unidad"
+                   asp-action="Index"
+                   asp-route-idConsorcio="@Model.IdConsorcio"
+                   class="hover:underline">
+                Consorcio "@Model.Consorcio.Nombre"
+            </a>
+            <span> &gt; </span>
+            <strong class="text-gray-700">Eliminar Unidad</strong>
+        </div>
+
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6">
+            ¿Está seguro que desea eliminar la unidad "@Model.Nombre" del consorcio "@Model.Consorcio.Nombre"?
+        </h1>
+
+        <form asp-controller="Unidad" asp-action="EliminarUnidad" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="idConsorcio" value="@Model.IdConsorcio" />
+
+            <div class="flex justify-center gap-4">
+                <button type="submit"
+                        class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded transition-colors">
+                    Eliminar
+                </button>
+
+                <a asp-controller="Unidad"
+                       asp-action="Index"
+                       asp-route-idConsorcio="@Model.IdConsorcio"
+                       class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded transition-colors">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+
+    </div>
+</section>

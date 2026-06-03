@@ -104,6 +104,81 @@ namespace AdministracionConsorcios.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Editar(int id)
+        {
+            var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
+
+            var unidad = _unidadService.ObtenerUnidad(id, usuarioId);
+
+            if (unidad == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.IdConsorcio = unidad.IdConsorcio;
+            ViewBag.NombreConsorcio = unidad.Consorcio.Nombre;
+
+            return View(unidad);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditarUnidad(Unidad unidad)
+        {
+            ModelState.Remove("UsuarioCreador");
+            ModelState.Remove("Consorcio");
+            ModelState.Remove("IdUsuarioCreador");
+            ModelState.Remove("FechaCreacion");
+
+            if (!ModelState.IsValid)
+            {
+                var usuarioIdError = int.Parse(User.FindFirst("UsuarioId").Value);
+                var consorcioError = _unidadService.ObtenerConsorcio(unidad.IdConsorcio, usuarioIdError);
+
+                ViewBag.IdConsorcio = unidad.IdConsorcio;
+                ViewBag.NombreConsorcio = consorcioError?.Nombre;
+
+                return View("Editar", unidad);
+            }
+
+            try
+            {
+                var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
+
+                await _unidadService.EditarUnidad(unidad, usuarioId);
+
+                return RedirectToAction("Index", new { idConsorcio = unidad.IdConsorcio });
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+
+                var usuarioIdError = int.Parse(User.FindFirst("UsuarioId").Value);
+                var consorcioError = _unidadService.ObtenerConsorcio(unidad.IdConsorcio, usuarioIdError);
+
+                ViewBag.IdConsorcio = unidad.IdConsorcio;
+                ViewBag.NombreConsorcio = consorcioError?.Nombre;
+
+                return View("Editar", unidad);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Eliminar(int id)
+        {
+            var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
+
+            var unidad = _unidadService.ObtenerUnidad(id, usuarioId);
+
+            if (unidad == null)
+            {
+                return NotFound();
+            }
+
+            return View(unidad);
+        }
+
+        [HttpPost]
         public IActionResult EliminarUnidad(int id, int idConsorcio)
         {
             var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);

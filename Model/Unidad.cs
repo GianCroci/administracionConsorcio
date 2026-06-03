@@ -24,7 +24,8 @@ namespace Model
         [EmailAddress]
         public string EmailPropietario { get; set; }
 
-        
+
+        [Range(1, int.MaxValue, ErrorMessage = "La superficie debe ser mayor a 0")]
         public int? Superficie { get; set; }
 
         [Required]

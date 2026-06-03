@@ -1,0 +1,108 @@
+﻿@using Model
+@model Unidad
+
+@{
+    ViewData["Title"] = "Nueva Unidad";
+    Layout = "_LogeadoLayout";
+}
+
+<section class="flex items-center justify-center p-10 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-10 w-full max-w-2xl">
+
+        <div class="mb-4 text-sm text-blue-600">
+            <a asp-controller="Consorcio" asp-action="Index" class="hover:underline">Mis Consorcios</a>
+            <span> &gt; </span>
+            <a asp-controller="Unidad"
+                   asp-action="Index"
+                   asp-route-idConsorcio="@ViewBag.IdConsorcio"
+                   class="hover:underline">
+                Consorcio "@ViewBag.NombreConsorcio"
+            </a>
+            <span> &gt; </span>
+            <strong class="text-gray-700">Nueva Unidad</strong>
+        </div>
+
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
+            Consorcio "@ViewBag.NombreConsorcio" - Nueva Unidad
+        </h1>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                @TempData["Success"]
+            </div>
+        }
+
+        <form asp-controller="Unidad" asp-action="CrearUnidad" method="post" class="space-y-4">
+
+            <input type="hidden" asp-for="IdConsorcio" />
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Consorcio</label>
+                <input value="@ViewBag.NombreConsorcio"
+                       disabled
+                       class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100" />
+            </div>
+
+            <div>
+                <label asp-for="Nombre" class="block text-sm font-medium text-gray-700"></label>
+                <input asp-for="Nombre" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2" />
+                <span asp-validation-for="Nombre" class="text-red-600 text-sm"></span>
+            </div>
+
+            <div>
+                <label asp-for="NombrePropietario" class="block text-sm font-medium text-gray-700"></label>
+                <input asp-for="NombrePropietario" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2" />
+                <span asp-validation-for="NombrePropietario" class="text-red-600 text-sm"></span>
+            </div>
+
+            <div>
+                <label asp-for="ApellidoPropietario" class="block text-sm font-medium text-gray-700"></label>
+                <input asp-for="ApellidoPropietario" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2" />
+                <span asp-validation-for="ApellidoPropietario" class="text-red-600 text-sm"></span>
+            </div>
+
+            <div>
+                <label asp-for="EmailPropietario" class="block text-sm font-medium text-gray-700"></label>
+                <input asp-for="EmailPropietario" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2" />
+                <span asp-validation-for="EmailPropietario" class="text-red-600 text-sm"></span>
+            </div>
+
+            <div>
+                <label asp-for="Superficie" class="block text-sm font-medium text-gray-700">Superficie M2</label>
+                <input asp-for="Superficie" type="number" min="1" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2" />
+                <span asp-validation-for="Superficie" class="text-red-600 text-sm"></span>
+            </div>
+
+            <div asp-validation-summary="ModelOnly" class="text-red-600 text-sm"></div>
+
+            <div class="flex justify-center gap-3 pt-4">
+                <button type="submit"
+                        name="accion"
+                        value="guardar"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors">
+                    Guardar
+                </button>
+
+                <button type="submit"
+                        name="accion"
+                        value="guardar_y_nuevo"
+                        class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors">
+                    Guardar y Crear otra Unidad
+                </button>
+
+                <a asp-controller="Unidad"
+                       asp-action="Index"
+                       asp-route-idConsorcio="@ViewBag.IdConsorcio"
+                       class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded transition-colors">
+                    Cancelar
+                </a>
+            </div>
+
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

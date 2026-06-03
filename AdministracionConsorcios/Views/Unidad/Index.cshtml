@@ -1,0 +1,91 @@
+﻿@using Model
+@model List<Unidad>
+
+@{
+    ViewData["Title"] = "Unidades";
+    Layout = "_LogeadoLayout";
+}
+
+<section class="flex items-center justify-center p-10 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-10 w-full max-w-4xl">
+
+        <div class="mb-4 text-sm text-blue-600">
+            <a asp-controller="Consorcio" asp-action="Index" class="hover:underline">Mis Consorcios</a>
+            <span> &gt; </span>
+            <span>Consorcio "@ViewBag.NombreConsorcio"</span>
+            <span> &gt; </span>
+            <strong class="text-gray-700">Unidades</strong>
+        </div>
+
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-800">Unidades</h1>
+
+            <a asp-controller="Unidad"
+                   asp-action="Crear"
+                   asp-route-idConsorcio="@ViewBag.IdConsorcio"
+                   class="text-blue-600 hover:underline">
+                Nueva Unidad
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table id="unidadesTable" class="min-w-full text-base text-left border border-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 border-b">Nombre</th>
+                        <th class="px-4 py-2 border-b">Apellido</th>
+                        <th class="px-4 py-2 border-b">Nombre</th>
+                        <th class="px-4 py-2 border-b">Mail</th>
+                        <th class="px-4 py-2 border-b">Editar</th>
+                        <th class="px-4 py-2 border-b">Eliminar</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2 border-b">@item.Nombre</td>
+                            <td class="px-4 py-2 border-b">@item.ApellidoPropietario</td>
+                            <td class="px-4 py-2 border-b">@item.NombrePropietario</td>
+                            <td class="px-4 py-2 border-b">@item.EmailPropietario</td>
+
+                            <td class="px-4 py-2 border-b">
+                                <a asp-controller="Unidad"
+                                       asp-action="Editar"
+                                       asp-route-id="@item.Id"
+                                       class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded transition-colors">
+                                    Editar
+                                </a>
+                            </td>
+
+                            <td class="px-4 py-2 border-b">
+                                <a asp-controller="Unidad"
+                                       asp-action="Eliminar"
+                                       asp-route-id="@item.Id"
+                                       asp-route-idConsorcio="@ViewBag.IdConsorcio"
+                                       class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded transition-colors">
+                                    Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#unidadesTable').DataTable({
+                order: [[0, 'asc']],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+}

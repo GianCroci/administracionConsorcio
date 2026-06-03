@@ -33,7 +33,13 @@
                             <td class="px-4 py-2 border-b">@item.Provincia.Nombre</td>
                             <td class="px-4 py-2 border-b">@item.Ciudad</td>
                             <td class="px-4 py-2 border-b">@item.Calle</td>
-                            <td class="px-4 py-2 border-b text-blue-600 hover:underline"><a href="#">Ver unidades</a></td>
+                            <td class="px-4 py-2 border-b text-blue-600 hover:underline">
+                                <a asp-controller="Unidad"
+                                       asp-action="Index"
+                                       asp-route-idConsorcio="@item.Id">
+                                    Ver unidades
+                                </a>
+                            </td>
                             <td class="px-4 py-2 border-b text-blue-600 hover:underline"><a href="#">Ver expensas</a></td>
                             <td class="px-4 py-2 border-b text-blue-600 hover:underline"><a href="#">Ver Gastos</a></td>
                             <td class="px-4 py-2 border-b text-blue-600 hover:underline">

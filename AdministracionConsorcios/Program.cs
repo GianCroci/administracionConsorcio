@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ConsorcioContext>(options =>
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IConsorcioService, ConsorcioService>();
 builder.Services.AddScoped<IUnidadService, UnidadService>();
+builder.Services.AddScoped<IGastoService, GastoService>();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);

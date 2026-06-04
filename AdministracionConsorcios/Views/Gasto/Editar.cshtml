@@ -1,0 +1,158 @@
+@using DTOs.ViewModels
+@model GastoViewModel
+@{
+    ViewData["Title"] = "Editar Gasto";
+    Layout = "_LogeadoLayout";
+}
+
+<section class="flex items-center justify-center p-7 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-7 w-full max-w-4xl">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Editar Gasto — @Model.NombreConsorcio</h1>
+
+        <div class="overflow-x-auto">
+            <div class="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-md">
+
+                <form class="md:col-span-2 space-y-4"
+                      asp-controller="Gasto"
+                      asp-action="EditarGasto"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="IdConsorcio" />
+
+                    <div>
+                        <label for="consorcio" class="block text-gray-700 font-medium mb-2">Consorcio</label>
+                        <input type="text"
+                               id="consorcio"
+                               value="@Model.NombreConsorcio"
+                               readonly
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none" />
+                    </div>
+
+                    <div>
+                        <label for="nombre" class="block text-gray-700 font-medium mb-2">Nombre</label>
+                        <input type="text"
+                               id="nombre"
+                               asp-for="Nombre"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <span asp-validation-for="Nombre" class="text-red-500"></span>
+                    </div>
+
+                    <div>
+                        <label for="descripcion" class="block text-gray-700 font-medium mb-2">Descripción</label>
+                        <textarea id="descripcion"
+                                  asp-for="Descripcion"
+                                  rows="3"
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <span asp-validation-for="Descripcion" class="text-red-500"></span>
+                    </div>
+
+                    <div>
+                        <label for="fechaGasto" class="block text-gray-700 font-medium mb-2">Fecha del Gasto</label>
+                        <input type="date"
+                               id="fechaGasto"
+                               asp-for="FechaGasto"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <span asp-validation-for="FechaGasto" class="text-red-500"></span>
+                    </div>
+
+                    <div>
+                        <label for="anioExpensa" class="block text-gray-700 font-medium mb-2">Año Expensa</label>
+                        <input type="number"
+                               id="anioExpensa"
+                               asp-for="AnioExpensa"
+                               min="2000"
+                               max="2100"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <span asp-validation-for="AnioExpensa" class="text-red-500"></span>
+                    </div>
+
+                    <div>
+                        <label for="mesExpensa" class="block text-gray-700 font-medium mb-2">Mes Expensa</label>
+                        <select id="mesExpensa"
+                                asp-for="MesExpensa"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="0">Seleccione un mes</option>
+                            @for (int i = 1; i <= 12; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                        <span asp-validation-for="MesExpensa" class="text-red-500"></span>
+                    </div>
+
+                    <div>
+                        <label for="monto" class="block text-gray-700 font-medium mb-2">Monto</label>
+                        <input type="number"
+                               id="monto"
+                               asp-for="Monto"
+                               step="0.01"
+                               min="0.01"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <span asp-validation-for="Monto" class="text-red-500"></span>
+                    </div>
+
+                    <div>
+                        <label for="tipoGasto" class="block text-gray-700 font-medium mb-2">Tipo de Gasto</label>
+                        <select id="tipoGasto"
+                                asp-for="IdTipoGasto"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                asp-items="@(new SelectList(ViewBag.TiposGasto, "Id", "Nombre"))">
+                            <option value="0">Seleccione un tipo de gasto</option>
+                        </select>
+                        <span asp-validation-for="IdTipoGasto" class="text-red-500"></span>
+                    </div>
+
+                    <div>
+                        <label for="archivoComprobante" class="block text-gray-700 font-medium mb-2">Comprobante</label>
+                        @if (!string.IsNullOrEmpty(Model.ArchivoComprobante))
+                        {
+                            <p class="mb-2">
+                                <a asp-controller="Gasto"
+                                   asp-action="DescargarComprobante"
+                                   asp-route-id="@Model.Id"
+                                   class="text-blue-600 hover:underline">
+                                    Ver comprobante actual
+                                </a>
+                            </p>
+                        }
+                        <p class="text-sm text-gray-600 mb-1">Nuevo comprobante (opcional)</p>
+                        <input type="file"
+                               id="archivoComprobante"
+                               name="archivoComprobante"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+
+                    <div class="flex flex-row gap-4 mt-4">
+                        <button type="submit"
+                                class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">
+                            Guardar
+                        </button>
+                        <a asp-controller="Gasto"
+                           asp-action="Index"
+                           asp-route-id="@Model.IdConsorcio"
+                           class="flex-1">
+                            <button type="button" class="w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">
+                                Cancelar
+                            </button>
+                        </a>
+                        <a asp-controller="Gasto"
+                           asp-action="Eliminar"
+                           asp-route-id="@Model.Id"
+                           class="flex-1">
+                            <button type="button" class="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-md hover:bg-red-700 transition-colors">
+                                Eliminar Gasto
+                            </button>
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

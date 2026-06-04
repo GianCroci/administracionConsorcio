@@ -117,7 +117,7 @@ namespace AdministracionConsorcios.Controllers
 
         // POST: /Gasto/EditarGasto
         [HttpPost]
-        public IActionResult EditarGasto(GastoViewModel gastoVm, IFormFile archivoComprobante)
+        public IActionResult EditarGasto(GastoViewModel gastoVm, IFormFile? archivoComprobante)
         {
             if (!ModelState.IsValid)
             {

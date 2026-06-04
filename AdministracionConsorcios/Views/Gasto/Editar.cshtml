@@ -12,7 +12,7 @@
         <div class="overflow-x-auto">
             <div class="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-md">
 
-                <form class="md:col-span-2 space-y-4"
+                <form  class="md:col-span-2 space-y-4"
                       asp-controller="Gasto"
                       asp-action="EditarGasto"
                       method="post"
@@ -20,6 +20,8 @@
 
                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="IdConsorcio" />
+                    <input type="hidden" asp-for="NombreConsorcio" />
+                    <input type="hidden" asp-for="ArchivoComprobante" />
 
                     <div>
                         <label for="consorcio" class="block text-gray-700 font-medium mb-2">Consorcio</label>

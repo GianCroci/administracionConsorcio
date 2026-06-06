@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class GeocodingService
+    public class GeocodingService : IGeocodingService
     {
         private readonly HttpClient _httpClient;
 

@@ -30,7 +30,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Login/Ingresar";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     });
-builder.Services.AddHttpClient<GeocodingService>();
+builder.Services.AddHttpClient<IGeocodingService, GeocodingService>();
 
 var app = builder.Build();
 

@@ -1,0 +1,108 @@
+@using Model
+@model List<ReservaSum>
+@{
+    ViewData["Title"] = "Reservas de Sum";
+    Layout = "_LogeadoLayout";
+}
+
+<section class="flex items-center justify-center p-10 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-10 w-full max-w-6xl">
+
+        <nav class="mb-4 text-sm text-blue-600">
+            <a asp-controller="Consorcio" asp-action="Index" class="hover:underline">Mis Consorcios</a>
+            <span> &gt; </span>
+            <span>@ViewBag.NombreConsorcio</span>
+            <span> &gt; </span>
+            <a asp-controller="Sum" asp-action="Index" asp-route-id="@ViewBag.IdConsorcio" class="hover:underline">Sums</a>
+            <span> &gt; </span>
+            <strong class="text-gray-700">Reservas</strong>
+        </nav>
+
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-800">Reservas — @ViewBag.NombreSum</h1>
+            <a asp-controller="ReservaSum"
+               asp-action="Crear"
+               asp-route-id="@ViewBag.IdSum"
+               class="bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">
+                + Nueva Reserva
+            </a>
+        </div>
+
+        @if (TempData["Exito"] != null)
+        {
+            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                @TempData["Exito"]
+            </div>
+        }
+
+        @if (Model.Count == 0)
+        {
+            <div class="bg-yellow-100 text-yellow-700 p-4 rounded">
+                <p>No hay Reservas registradas. <a asp-controller="ReservaSum" asp-action="Crear" asp-route-id="@ViewBag.IdSum" class="text-blue-600 hover:underline">Crear una</a></p>
+            </div>
+        }
+        else
+        {
+            <div class="overflow-x-auto">
+                <table id="reservasTable" class="min-w-full text-base text-left border border-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-2 border-b">Fecha</th>
+                            <th class="px-4 py-2 border-b">Turno</th>
+                            <th class="px-4 py-2 border-b">Usuario</th>
+                            <th class="px-4 py-2 border-b">Comentarios</th>
+                            <th class="px-4 py-2 border-b">¿Entregó Correctamente?</th>
+                            <th class="px-4 py-2 border-b">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 border-b text-blue-600 hover:underline">
+                                    <a asp-controller="ReservaSum" asp-action="Editar" asp-route-id="@item.Id">@item.FechaReserva.ToString("dd/MM/yyyy")</a>
+                                </td>
+                                <td class="px-4 py-2 border-b">@(item.Turno == 0 ? "Día" : "Noche")</td>
+                                <td class="px-4 py-2 border-b">@item.UsuarioQueReserva.Email</td>
+                                <td class="px-4 py-2 border-b">@item.Comentarios</td>
+                                <td class="px-4 py-2 border-b text-center">
+                                    <input type="checkbox"
+                                           class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                           @(item.EntregoCorrectamente ? "checked=\"checked\"" : "")
+                                           disabled />
+                                </td>
+                                <td class="px-4 py-2 border-b">
+                                    <div class="flex gap-2 justify-center">
+                                        <a asp-controller="ReservaSum" asp-action="Editar" asp-route-id="@item.Id">
+                                            <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded transition-colors">
+                                                Editar
+                                            </button>
+                                        </a>
+                                        <a asp-controller="ReservaSum" asp-action="Eliminar" asp-route-id="@item.Id">
+                                            <button type="button" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded transition-colors">
+                                                Eliminar
+                                            </button>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#reservasTable').DataTable({
+                order: [[0, 'desc']],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+}

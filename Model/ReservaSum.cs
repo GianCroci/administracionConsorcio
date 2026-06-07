@@ -29,9 +29,10 @@ namespace Model
         
         public virtual ICollection<Sum> Reservas { get; set; }
     }
-}
-public enum Turno
-{
-    Dia,
-    Noche
+
+    public enum Turno
+    {
+        Dia,
+        Noche
+    }
 }

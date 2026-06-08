@@ -1,0 +1,119 @@
+@using Model
+@model List<Notificacion>
+@{
+    ViewData["Title"] = "Notificaciones";
+    Layout = "_LogeadoLayout";
+}
+
+<section class="flex items-center justify-center p-10 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-10 w-full max-w-6xl">
+
+        <nav class="mb-4 text-sm text-blue-600">
+            <a asp-controller="Consorcio" asp-action="Index" class="hover:underline">Mis Consorcios</a>
+            <span> &gt; </span>
+            <span>@ViewBag.NombreConsorcio</span>
+            <span> &gt; </span>
+            <strong class="text-gray-700">Notificaciones</strong>
+        </nav>
+
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-800">Notificaciones — @ViewBag.NombreConsorcio</h1>
+            <a asp-controller="Notificacion"
+               asp-action="Crear"
+               asp-route-id="@ViewBag.IdConsorcio"
+               class="bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">
+                + Nueva Notificación
+            </a>
+        </div>
+
+        @if (TempData["Exito"] != null)
+        {
+            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                @TempData["Exito"]
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                @TempData["Error"]
+            </div>
+        }
+
+        <div class="overflow-x-auto">
+            <table id="notificacionesTable" class="min-w-full text-base text-left border border-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 border-b">Título</th>
+                        <th class="px-4 py-2 border-b">Descripción</th>
+                        <th class="px-4 py-2 border-b">Fecha Creación</th>
+                        <th class="px-4 py-2 border-b">Fecha Envío</th>
+                        <th class="px-4 py-2 border-b">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var descripcionCorta = item.Descripcion.Length > 80
+                            ? item.Descripcion.Substring(0, 80) + "..."
+                            : item.Descripcion;
+
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2 border-b text-blue-600 hover:underline">
+                                @if (item.FechaEnvio == null)
+                                {
+                                    <a asp-controller="Notificacion" asp-action="Editar" asp-route-id="@item.Id">@item.Titulo</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Notificacion" asp-action="Detalle" asp-route-id="@item.Id">@item.Titulo</a>
+                                }
+                            </td>
+                            <td class="px-4 py-2 border-b">@descripcionCorta</td>
+                            <td class="px-4 py-2 border-b">@item.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td class="px-4 py-2 border-b">
+                                @(item.FechaEnvio?.ToString("dd/MM/yyyy HH:mm") ?? "-")
+                            </td>
+                            <td class="px-4 py-2 border-b">
+                                @if (item.FechaEnvio == null)
+                                {
+                                    <div class="flex gap-2">
+                                        <form asp-controller="Notificacion"
+                                              asp-action="Enviar"
+                                              method="post"
+                                              class="inline">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <input type="hidden" name="idConsorcio" value="@ViewBag.IdConsorcio" />
+                                            <button type="submit"
+                                                    class="bg-green-600 hover:bg-green-700 text-white font-semibold py-1 px-3 rounded transition-colors">
+                                                Enviar
+                                            </button>
+                                        </form>
+                                        <a asp-controller="Notificacion" asp-action="Eliminar" asp-route-id="@item.Id">
+                                            <button type="button" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded transition-colors">
+                                                Eliminar
+                                            </button>
+                                        </a>
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#notificacionesTable').DataTable({
+                order: [[2, 'desc']],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+}

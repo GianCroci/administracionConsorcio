@@ -16,6 +16,8 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IConsorcioService, ConsorcioService>();
 builder.Services.AddScoped<IUnidadService, UnidadService>();
 builder.Services.AddScoped<IGastoService, GastoService>();
+builder.Services.AddScoped<INotificacionService, NotificacionService>();
+builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<ISumService, SumService>();
 builder.Services.AddScoped<IReservaSumService, ReservaSumService>();
 builder.Services.AddScoped<IExpensaService, ExpensaService>();

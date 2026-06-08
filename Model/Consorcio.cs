@@ -54,6 +54,8 @@ namespace Model
 
         public virtual ICollection<Sum> Sums { get; set; }
 
+        public virtual ICollection<Notificacion> Notificaciones { get; set; }
+
 
         public string GetGoogleMapsUrl()
         {

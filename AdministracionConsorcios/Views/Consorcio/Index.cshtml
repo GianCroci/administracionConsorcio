@@ -21,7 +21,6 @@
                         <th class="px-4 py-2 border-b">SUMs</th>
                         <th class="px-4 py-2 border-b">Expensas</th>
                         <th class="px-4 py-2 border-b">Gastos</th>
-                        <th class="px-4 py-2 border-b">Ver en Mapa</th>
                         <th class="px-4 py-2 border-b">Eliminar</th>
                     </tr>
                 </thead>
@@ -52,11 +51,6 @@
                             <td class="px-4 py-2 border-b text-blue-600 hover:underline">
                                 <a asp-controller="Gasto" asp-action="Index" asp-route-id="@item.Id">Ver Gastos</a>
                             </td>
-                            <td class="px-4 py-2 border-b text-blue-600 hover:underline">
-                                <a target="_blank" href="@item.GetGoogleMapsUrl()">
-                                    Ver en mapa
-                                </a>
-                            </td>
                             <td class="px-4 py-2 border-b">
                                 <a asp-controller="Consorcio" asp-action="Eliminar" asp-route-id="@item.Id">
                                     <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded transition-colors">
@@ -72,3 +66,28 @@
         </div>
     </div>
 </section>
+
+<div id="mapModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 z-50">
+
+    <div class="bg-white w-[95%] max-w-6xl rounded-xl shadow-xl overflow-hidden">
+
+        
+        <div class="flex justify-between items-center px-4 py-3 border-b">
+            <h2 class="text-lg font-semibold">Mapa de consorcios</h2>
+
+            <button onclick="closeMapModal()"
+                class="text-gray-500 hover:text-black text-xl">
+                ✕
+            </button>
+        </div>
+
+        
+        <div id="map" class="w-full h-[600px]"></div>
+
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/indexConsorcio.js"></script>
+}

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Model;
 using Services.Interfaces;
 using System.Security.Claims;
@@ -71,8 +72,8 @@ namespace AdministracionConsorcios.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearConsorcio(ConsorcioViewModel consorciovm,string accion)
-        {         
+        public async Task<IActionResult> CrearConsorcio(ConsorcioViewModel consorciovm, string accion)
+        {
             if (!ModelState.IsValid)
             {
                 ViewBag.Provincias = _consorcioService.obtenerProvincias();
@@ -94,7 +95,7 @@ namespace AdministracionConsorcios.Controllers
                         return RedirectToAction("Crear");
 
                     case "guardar_y_unidad":
-                       return RedirectToAction("Crear","Unidad",new {idConsorcio = consorcioId });
+                        return RedirectToAction("Crear", "Unidad", new { idConsorcio = consorcioId });
 
                     default:
                         return RedirectToAction("Index");
@@ -104,7 +105,7 @@ namespace AdministracionConsorcios.Controllers
             {
                 TempData["Error"] = ex.Message;
                 ViewBag.Provincias = _consorcioService.obtenerProvincias();
-                return View("Crear",consorciovm);
+                return View("Crear", consorciovm);
             }
         }
 
@@ -141,6 +142,5 @@ namespace AdministracionConsorcios.Controllers
                 return RedirectToAction("Index");
             }
         }
-
     }
 }

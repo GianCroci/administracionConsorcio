@@ -18,6 +18,7 @@ builder.Services.AddScoped<IUnidadService, UnidadService>();
 builder.Services.AddScoped<IGastoService, GastoService>();
 builder.Services.AddScoped<ISumService, SumService>();
 builder.Services.AddScoped<IReservaSumService, ReservaSumService>();
+builder.Services.AddScoped<IExpensaService, ExpensaService>();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);

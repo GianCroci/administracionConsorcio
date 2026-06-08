@@ -13,16 +13,21 @@ namespace Services
     public class ConsorcioService : IConsorcioService
     {
         private readonly ConsorcioContext _context;
-        private readonly GeocodingService _geocodingService;
+        private readonly IGeocodingService _geocodingService;
 
-        public ConsorcioService(ConsorcioContext context, GeocodingService geocodingService)
+        public ConsorcioService(ConsorcioContext context, IGeocodingService geocodingService)
         {
             _context = context;
             _geocodingService = geocodingService;
         }
 
-        public async Task AgregarConsorcio(ConsorcioViewModel consorcioVm, int usuarioId)
+        public async Task<int> AgregarConsorcio(ConsorcioViewModel consorcioVm, int usuarioId)
         {
+            var existe = await _context.Consorcios.AnyAsync(c => c.Nombre == consorcioVm.Nombre);
+            if (existe)
+            {
+                throw new Exception("El consorcio ya se encuentra registrado.");
+            }
 
             var consorcio = new Consorcio
             {
@@ -46,17 +51,24 @@ namespace Services
 
             _context.Consorcios.Add(consorcio);
             _context.SaveChanges();
+
+            return consorcio.Id;
         }
 
         public async Task EditarConsorcio(ConsorcioViewModel consorcioVm)
         {
-
             var existente = _context.Consorcios
                 .Include(c => c.Provincia)
                 .FirstOrDefault(c => c.Id == consorcioVm.Id);
 
             if (existente == null)
                 throw new Exception("Consorcio no encontrado");
+
+            var existeNombre = await _context.Consorcios.AnyAsync(c => c.Nombre == consorcioVm.Nombre);
+            if (existeNombre)
+            {
+                throw new Exception("El consorcio ya se encuentra registrado");
+            }
 
 
             existente.Nombre = consorcioVm.Nombre;
@@ -78,9 +90,14 @@ namespace Services
             _context.SaveChanges();
         }
 
-        public void EliminarConsorcio(int id)
+        public async Task EliminarConsorcio(int id)
         {
             var consorcio = _context.Consorcios.Find(id);
+
+            if( consorcio == null )
+            {
+                throw new Exception("Consorcio no encontrado");
+            }
 
             if (consorcio != null)
             {

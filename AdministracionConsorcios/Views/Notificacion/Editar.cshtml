@@ -1,0 +1,139 @@
+@using DTOs.ViewModels
+@model NotificacionViewModel
+@{
+    ViewData["Title"] = Model.FueEnviada ? "Detalle de Notificación" : "Editar Notificación";
+    Layout = "_LogeadoLayout";
+    var inputClass = Model.FueEnviada
+        ? "w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none"
+        : "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
+}
+
+<section class="flex items-center justify-center p-7 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-7 w-full max-w-4xl">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
+            @(Model.FueEnviada ? "Detalle de Notificación" : "Editar Notificación") — @Model.NombreConsorcio
+        </h1>
+
+        <div class="overflow-x-auto">
+            <div class="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-md">
+
+                <form class="md:col-span-2 space-y-4"
+                      asp-controller="Notificacion"
+                      asp-action="EditarNotificacion"
+                      method="post">
+
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="IdConsorcio" />
+                    <input type="hidden" asp-for="NombreConsorcio" />
+                    <input type="hidden" asp-for="FechaCreacion" />
+                    <input type="hidden" asp-for="FechaEnvio" />
+
+                    <div>
+                        <label for="consorcio" class="block text-gray-700 font-medium mb-2">Consorcio</label>
+                        <input type="text"
+                               id="consorcio"
+                               value="@Model.NombreConsorcio"
+                               readonly
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none" />
+                    </div>
+
+                    <div>
+                        <label for="titulo" class="block text-gray-700 font-medium mb-2">Título</label>
+                        <input type="text"
+                               id="titulo"
+                               asp-for="Titulo"
+                               readonly="@Model.FueEnviada"
+                               class="@inputClass" />
+                        @if (!Model.FueEnviada)
+                        {
+                            <span asp-validation-for="Titulo" class="text-red-500"></span>
+                        }
+                    </div>
+
+                    <div>
+                        <label for="descripcion" class="block text-gray-700 font-medium mb-2">Descripción</label>
+                        <textarea id="descripcion"
+                                  asp-for="Descripcion"
+                                  rows="5"
+                                  readonly="@Model.FueEnviada"
+                                  class="@inputClass"></textarea>
+                        @if (!Model.FueEnviada)
+                        {
+                            <span asp-validation-for="Descripcion" class="text-red-500"></span>
+                        }
+                    </div>
+
+                    <div>
+                        <label for="fechaCreacion" class="block text-gray-700 font-medium mb-2">Fecha Creación</label>
+                        <input type="text"
+                               id="fechaCreacion"
+                               value="@Model.FechaCreacion.ToString("dd/MM/yyyy HH:mm")"
+                               readonly
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none" />
+                    </div>
+
+                    @if (Model.FueEnviada)
+                    {
+                        <div>
+                            <label for="fechaEnvio" class="block text-gray-700 font-medium mb-2">Fecha Envío</label>
+                            <input type="text"
+                                   id="fechaEnvio"
+                                   value="@Model.FechaEnvio?.ToString("dd/MM/yyyy HH:mm")"
+                                   readonly
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none" />
+                        </div>
+                    }
+
+                    <div class="flex flex-row flex-wrap gap-4 mt-4">
+                        @if (!Model.FueEnviada)
+                        {
+                            <button type="submit"
+                                    class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">
+                                Guardar
+                            </button>
+                        }
+                        <a asp-controller="Notificacion"
+                           asp-action="Index"
+                           asp-route-id="@Model.IdConsorcio"
+                           class="flex-1">
+                            <button type="button" class="w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">
+                                Cancelar
+                            </button>
+                        </a>
+                    </div>
+
+                </form>
+
+                @if (!Model.FueEnviada)
+                {
+                    <div class="flex flex-row flex-wrap gap-4 mt-4">
+                        <form asp-controller="Notificacion"
+                              asp-action="Enviar"
+                              method="post"
+                              class="flex-1">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <input type="hidden" name="idConsorcio" value="@Model.IdConsorcio" />
+                            <button type="submit"
+                                    class="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-md hover:bg-green-700 transition-colors">
+                                Enviar Notificación
+                            </button>
+                        </form>
+                        <a asp-controller="Notificacion"
+                           asp-action="Eliminar"
+                           asp-route-id="@Model.Id"
+                           class="flex-1">
+                            <button type="button" class="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-md hover:bg-red-700 transition-colors">
+                                Eliminar
+                            </button>
+                        </a>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

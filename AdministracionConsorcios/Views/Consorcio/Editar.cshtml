@@ -68,6 +68,9 @@
                         <a asp-controller="Consorcio" asp-action="Index" class="flex-1">
                             <button type="button" class="w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">Cancelar</button>
                         </a>
+                        <a asp-controller="Notificacion" asp-action="Index" asp-route-id="@Model.Id" class="flex-1">
+                            <button type="button" class="w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">Ver Notificaciones</button>
+                        </a>
                     </div>
 
                 </form>

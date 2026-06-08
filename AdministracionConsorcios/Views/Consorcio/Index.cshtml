@@ -48,7 +48,7 @@
                                     Ver SUMs
                                 </a>
                             </td>
-                            <td class="px-4 py-2 border-b text-blue-600 hover:underline"><a href="#">Ver expensas</a></td>
+                            <td class="px-4 py-2 border-b text-blue-600 hover:underline"><a asp-controller="Expensa" asp-action="Index" asp-route-id="@item.Id">Ver expensas</a></td>
                             <td class="px-4 py-2 border-b text-blue-600 hover:underline">
                                 <a asp-controller="Gasto" asp-action="Index" asp-route-id="@item.Id">Ver Gastos</a>
                             </td>

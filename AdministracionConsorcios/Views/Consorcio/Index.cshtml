@@ -18,6 +18,7 @@
                         <th class="px-4 py-2 border-b">Ciudad</th>
                         <th class="px-4 py-2 border-b">Calle</th>
                         <th class="px-4 py-2 border-b">Unidades</th>
+                        <th class="px-4 py-2 border-b">SUMs</th>
                         <th class="px-4 py-2 border-b">Expensas</th>
                         <th class="px-4 py-2 border-b">Gastos</th>
                         <th class="px-4 py-2 border-b">Ver en Mapa</th>
@@ -40,7 +41,14 @@
                                     Ver unidades
                                 </a>
                             </td>
-                            <td class="px-4 py-2 border-b text-blue-600 hover:underline"><a href="#">Ver expensas</a></td>
+                            <td class="px-4 py-2 border-b text-blue-600 hover:underline">
+                                <a asp-controller="Sum"
+                                       asp-action="Index"
+                                       asp-route-idConsorcio="@item.Id">
+                                    Ver SUMs
+                                </a>
+                            </td>
+                            <td class="px-4 py-2 border-b text-blue-600 hover:underline"><a asp-controller="Expensa" asp-action="Index" asp-route-id="@item.Id">Ver expensas</a></td>
                             <td class="px-4 py-2 border-b text-blue-600 hover:underline">
                                 <a asp-controller="Gasto" asp-action="Index" asp-route-id="@item.Id">Ver Gastos</a>
                             </td>

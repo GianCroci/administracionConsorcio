@@ -1,0 +1,67 @@
+﻿@using DTOs
+@model ExpensaDTO
+@{
+    ViewData["Title"] = "Expensas";
+    Layout = "_LogeadoLayout";
+}
+
+<section class="flex items-center justify-center p-10 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-10 w-full max-w-6xl">
+
+        <nav class="mb-4 text-sm text-blue-600">
+            <a asp-controller="Consorcio" asp-action="Index" class="hover:underline">Mis Consorcios</a>
+            <span> &gt; </span>
+            <span>
+                @Model.ConsorcioNombre
+            </span>
+            <span> &gt; </span>
+            <strong class="text-gray-700">Expensas</strong>
+        </nav>
+
+        <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">Consorcio "@Model.ConsorcioNombre" - Expensas</h1>
+
+        <div class="mb-4 text-gray-700">
+            <p><span class="font-semibold">Gasto Total Mes actual @Model.Mes (hasta el momento):</span> $@Model.GastoMes.ToString("N0")</p>
+            <p><span class="font-semibold">Unidades:</span> @Model.CantidadUnidades</p>
+            <p><span class="font-semibold">Monto x Unidad:</span> $@Model.MontoXUnidad.ToString("N0")</p>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table id="tablaExpensas" class="min-w-full text-base text-left border border-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 border-b">Año</th>
+                        <th class="px-4 py-2 border-b">Mes</th>
+                        <th class="px-4 py-2 border-b">Gasto Total ($)</th>
+                        <th class="px-4 py-2 border-b">Expensas x Unidad ($)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.Expensas)
+                    {
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2 border-b">@item.Año</td>
+                            <td class="px-4 py-2 border-b">@item.Mes</td>
+                            <td class="px-4 py-2 border-b">$@item.GastoMes.ToString("N0")</td>
+                            <td class="px-4 py-2 border-b">$@item.MontoXUnidad.ToString("N0")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#tablaExpensas').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+}
+}

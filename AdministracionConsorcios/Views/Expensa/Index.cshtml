@@ -47,6 +47,7 @@
     <script>
         $(document).ready(function () {
             $('#tablaExpensas').DataTable({
+
                 ajax: {
                     url: '@Url.Action("GetExpensas", "Expensa", new { Id = Model.ConsorcioId })',
                     type: 'GET',
@@ -59,6 +60,7 @@
                     { data: 'montoXUnidad', render: data => '$' + data.toLocaleString('es-AR') }
                 ],
                 ordering: false,
+
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
                 }

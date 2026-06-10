@@ -34,8 +34,5 @@ namespace AdministracionConsorcios.Controllers
             return Json(new { data = expensas });
         }
 
-        
-
-
     }
 }

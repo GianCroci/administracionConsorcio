@@ -22,13 +22,17 @@ namespace AdministracionConsorcios.Controllers
             if (consorcio == null)
                 return NotFound();
 
-            ViewBag.Expensas = await _expensaService.GetExpensasPorMes(Id);
-
             return View(consorcio);
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> GetExpensas(int Id)
+        {
 
+
+            var expensas = await _expensaService.GetExpensasPorMes(Id);
+            return Json(new { data = expensas });
+        }
 
     }
 }

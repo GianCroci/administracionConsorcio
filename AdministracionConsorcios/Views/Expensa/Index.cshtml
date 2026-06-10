@@ -36,17 +36,7 @@
                         <th class="px-4 py-2 border-b">Expensas x Unidad ($)</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var item in ViewBag.Expensas)
-                    {
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-2 border-b">@item.Año</td>
-                            <td class="px-4 py-2 border-b">@item.Mes</td>
-                            <td class="px-4 py-2 border-b">$@item.GastoMes.ToString("N0")</td>
-                            <td class="px-4 py-2 border-b">$@item.MontoXUnidad.ToString("N0")</td>
-                        </tr>
-                    }
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
 
@@ -57,6 +47,20 @@
     <script>
         $(document).ready(function () {
             $('#tablaExpensas').DataTable({
+
+                ajax: {
+                    url: '@Url.Action("GetExpensas", "Expensa", new { Id = Model.ConsorcioId })',
+                    type: 'GET',
+                    dataSrc: 'data'
+                },
+                columns: [
+                    { data: 'año' },
+                    { data: 'mes' },
+                    { data: 'gastoMes', render: data => '$' + data.toLocaleString('es-AR') },
+                    { data: 'montoXUnidad', render: data => '$' + data.toLocaleString('es-AR') }
+                ],
+                ordering: false,
+
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
                 }

@@ -1,0 +1,100 @@
+@using DTOs.ViewModels
+@using Model
+@model ReservaSumViewModel
+@{
+    ViewData["Title"] = "Nueva Reserva";
+    Layout = "_LogeadoLayout";
+}
+
+<section class="flex items-center justify-center p-7 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-7 w-full max-w-4xl">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Nueva Reserva — @Model.NombreSum</h1>
+
+        @if (TempData["Exito"] != null)
+        {
+            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                @TempData["Exito"]
+            </div>
+        }
+
+        <div class="overflow-x-auto">
+            <div class="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-md">
+
+                <form class="md:col-span-2 space-y-4"
+                      asp-controller="ReservaSum"
+                      asp-action="CrearReserva"
+                      method="post">
+
+                    <input type="hidden" asp-for="IdSum" />
+
+                    <div>
+                        <label for="nombreSum" class="block text-gray-700 font-medium mb-2">Sum</label>
+                        <input type="text"
+                               id="nombreSum"
+                               value="@Model.NombreSum"
+                               readonly
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none" />
+                    </div>
+
+                    <div>
+                        <label for="fechaReserva" class="block text-gray-700 font-medium mb-2">Fecha de Reserva</label>
+                        <input type="date"
+                               id="fechaReserva"
+                               asp-for="FechaReserva"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <span asp-validation-for="FechaReserva" class="text-red-500"></span>
+                    </div>
+
+                    <div>
+                        <label for="turno" class="block text-gray-700 font-medium mb-2">Turno</label>
+                        <select id="turno"
+                                asp-for="Turno"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Seleccione un turno</option>
+                            <option value="0">Día</option>
+                            <option value="1">Noche</option>
+                        </select>
+                        <span asp-validation-for="Turno" class="text-red-500"></span>
+                    </div>
+
+                    <div>
+                        <label for="comentarios" class="block text-gray-700 font-medium mb-2">Comentarios</label>
+                        <textarea id="comentarios"
+                                  asp-for="Comentarios"
+                                  rows="3"
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <span asp-validation-for="Comentarios" class="text-red-500"></span>
+                    </div>
+
+                    <div class="flex flex-row gap-4 mt-4">
+                        <button type="submit"
+                                class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+                                name="accion"
+                                value="guardar">
+                            Guardar
+                        </button>
+                        <button type="submit"
+                                class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+                                name="accion"
+                                value="guardar_y_nuevo">
+                            Guardar y crear otra
+                        </button>
+                        <a asp-controller="ReservaSum"
+                           asp-action="Index"
+                           asp-route-id="@Model.IdSum"
+                           class="flex-1">
+                            <button type="button" class="w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">
+                                Cancelar
+                            </button>
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

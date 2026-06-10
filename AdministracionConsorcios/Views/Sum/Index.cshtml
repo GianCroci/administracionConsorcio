@@ -1,0 +1,86 @@
+@using Model
+@model List<Sum>
+@{
+    ViewData["Title"] = "Sums";
+    Layout = "_LogeadoLayout";
+}
+
+<section class="flex items-center justify-center p-10 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-10 w-full max-w-6xl">
+
+        <nav class="mb-4 text-sm text-blue-600">
+            <a asp-controller="Consorcio" asp-action="Index" class="hover:underline">Mis Consorcios</a>
+            <span> &gt; </span>
+            <span>Consorcio "@ViewBag.NombreConsorcio"</span>
+            <span> &gt; </span>
+            <strong class="text-gray-700">Sums</strong>
+        </nav>
+
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-800">Sums — @ViewBag.NombreConsorcio</h1>
+            <a asp-controller="Sum"
+               asp-action="Crear"
+               asp-route-idConsorcio="@ViewBag.IdConsorcio"
+               class="bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">
+                + Nuevo Sum
+            </a>
+        </div>
+
+            <div class="overflow-x-auto">
+                <table id="sumsTable" class="min-w-full text-base text-left border border-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-2 border-b">Nombre</th>
+                            <th class="px-4 py-2 border-b">Cantidad de Reservas</th>
+                            <th class="px-4 py-2 border-b">Ver Reservas</th>
+                            <th class="px-4 py-2 border-b">Editar</th>
+                            <th class="px-4 py-2 border-b">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 border-b">@item.Nombre</td>
+                                <td class="px-4 py-2 border-b">@item.Reservas?.Count</td>
+                                <td class="px-4 py-2 border-b text-blue-600 hover:underline">
+                                    <a asp-controller="ReservaSum" asp-action="Index" asp-route-id="@item.Id">
+                                        Ver Reservas
+                                    </a>
+                                </td>
+                                                            <td class="px-4 py-2 border-b">
+                                <a asp-controller="Sum"
+                                       asp-action="Editar"
+                                       asp-route-id="@item.Id"
+                                       class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded transition-colors">
+                                    Editar
+                                </a>
+                            </td>
+
+                            <td class="px-4 py-2 border-b">
+                                <a asp-controller="Sum"
+                                       asp-action="Eliminar"
+                                       asp-route-id="@item.Id"
+                                       class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded transition-colors">
+                                    Eliminar
+                                </a>
+                            </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#sumsTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+}

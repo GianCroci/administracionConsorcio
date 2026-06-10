@@ -16,6 +16,7 @@ namespace Data
         public DbSet<Gasto> Gastos { get; set; }
         public DbSet<Sum> Sum { get; set; }
         public DbSet<ReservaSum> ReservaSum { get; set; }
+        public DbSet<Notificacion> Notificaciones { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -71,6 +72,18 @@ namespace Data
             modelBuilder.Entity<ReservaSum>()
                 .Property(r => r.Turno)
                 .HasConversion<int>();
+
+            modelBuilder.Entity<Notificacion>()
+                .HasOne(n => n.UsuarioCreador)
+                .WithMany(u => u.Notificaciones)
+                .HasForeignKey(n => n.IdUsuarioCreador)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Notificacion>()
+                .HasOne(n => n.Consorcio)
+                .WithMany(c => c.Notificaciones)
+                .HasForeignKey(n => n.IdConsorcio)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

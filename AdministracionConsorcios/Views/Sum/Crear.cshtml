@@ -1,0 +1,78 @@
+@using DTOs.ViewModels
+@model SumViewModel
+@{
+    ViewData["Title"] = "Nuevo Sum";
+    Layout = "_LogeadoLayout";
+}
+
+<section class="flex items-center justify-center p-7 flex-1 bg-gray-50">
+    <div class="bg-white shadow-md rounded-xl p-7 w-full max-w-4xl">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Nuevo Sum — @Model.NombreConsorcio</h1>
+
+        @if (TempData["Exito"] != null)
+        {
+            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                @TempData["Exito"]
+            </div>
+        }
+
+        <div class="overflow-x-auto">
+            <div class="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-md">
+
+                <form class="md:col-span-2 space-y-4"
+                      asp-controller="Sum"
+                      asp-action="CrearSum"
+                      method="post">
+
+                    <input type="hidden" asp-for="IdConsorcio" />
+
+                    <div>
+                        <label for="consorcio" class="block text-gray-700 font-medium mb-2">Consorcio</label>
+                        <input type="text"
+                               id="consorcio"
+                               value="@Model.NombreConsorcio"
+                               readonly
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none" />
+                    </div>
+
+                    <div>
+                        <label for="nombre" class="block text-gray-700 font-medium mb-2">Nombre</label>
+                        <input type="text"
+                               id="nombre"
+                               asp-for="Nombre"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <span asp-validation-for="Nombre" class="text-red-500"></span>
+                    </div>
+
+                    <div class="flex flex-row gap-4 mt-4">
+                        <button type="submit"
+                                class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+                                name="accion"
+                                value="guardar">
+                            Guardar
+                        </button>
+                        <button type="submit"
+                                class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+                                name="accion"
+                                value="guardar_y_nuevo">
+                            Guardar y crear otro
+                        </button>
+                        <a asp-controller="Sum"
+                           asp-action="Index"
+                           asp-route-idConsorcio="@Model.IdConsorcio"
+                           class="flex-1">
+                            <button type="button" class="w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">
+                                Cancelar
+                            </button>
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

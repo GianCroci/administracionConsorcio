@@ -9,8 +9,8 @@ namespace Services.Interfaces
     public interface IConsorcioService
     {
         List<Consorcio> ObtenerConsorcios(int usuarioId);
-        Task AgregarConsorcio(ConsorcioViewModel consorcioVm, int usuarioId);
-        void EliminarConsorcio(int id);
+        Task<int> AgregarConsorcio(ConsorcioViewModel consorcioVm, int usuarioId);
+        Task EliminarConsorcio(int id);
         Task EditarConsorcio(ConsorcioViewModel consorcioVm);
         List<Provincia> obtenerProvincias();
     }

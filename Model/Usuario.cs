@@ -31,5 +31,7 @@ namespace Model
         public virtual ICollection<Gasto> Gastos { get; set; }
 
         public virtual ICollection<ReservaSum> Reservas { get; set; }
+
+        public virtual ICollection<Notificacion> Notificaciones { get; set; }
     }
 }

@@ -16,6 +16,11 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IConsorcioService, ConsorcioService>();
 builder.Services.AddScoped<IUnidadService, UnidadService>();
 builder.Services.AddScoped<IGastoService, GastoService>();
+builder.Services.AddScoped<INotificacionService, NotificacionService>();
+builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<ISumService, SumService>();
+builder.Services.AddScoped<IReservaSumService, ReservaSumService>();
+builder.Services.AddScoped<IExpensaService, ExpensaService>();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -30,7 +35,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Login/Ingresar";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     });
-builder.Services.AddHttpClient<GeocodingService>();
+builder.Services.AddHttpClient<IGeocodingService, GeocodingService>();
 
 var app = builder.Build();
 

@@ -8,7 +8,7 @@ namespace Model
         [Key]
         public int Id { get; set; }
 
-        public String nombre {get; set; }
+        public String Nombre {get; set; }
 
         public int IdConsorcio { get; set; }
         [ForeignKey("IdConsorcio")]

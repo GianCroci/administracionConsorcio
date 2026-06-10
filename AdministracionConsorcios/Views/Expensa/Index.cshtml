@@ -45,27 +45,8 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            $('#tablaExpensas').DataTable({
-
-                ajax: {
-                    url: '@Url.Action("GetExpensas", "Expensa", new { Id = Model.ConsorcioId })',
-                    type: 'GET',
-                    dataSrc: 'data'
-                },
-                columns: [
-                    { data: 'año' },
-                    { data: 'mes' },
-                    { data: 'gastoMes', render: data => '$' + data.toLocaleString('es-AR') },
-                    { data: 'montoXUnidad', render: data => '$' + data.toLocaleString('es-AR') }
-                ],
-                ordering: false,
-
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
-                }
-            });
-        });
+        var consorcioId = @Model.ConsorcioId;
     </script>
+    <script src="~/js/tableExpensa.js"></script>
 }
-}
+

@@ -8,12 +8,14 @@
 <section class="flex items-center justify-center p-10 flex-1 bg-gray-50">
     <div class="bg-white shadow-md rounded-xl p-10 w-full max-w-6xl">
 
-        <nav class="mb-4 text-sm text-blue-600">
-            <a asp-controller="Consorcio" asp-action="Index" class="hover:underline">Mis Consorcios</a>
-            <span> &gt; </span>
-            <span>@ViewBag.NombreConsorcio</span>
-            <span> &gt; </span>
-            <strong class="text-gray-700">Gastos</strong>
+        <nav class="text-sm text-gray-500 mb-4">
+            <a asp-controller="Consorcio" asp-action="Index"
+               class="hover:underline text-blue-600">Mis Consorcios</a>
+            <span class="mx-1">&gt;</span>
+            <a asp-controller="Gasto" asp-action="Index" asp-route-id="@ViewBag.IdConsorcio"
+               class="hover:underline text-blue-600">@ViewBag.NombreConsorcio</a>
+            <span class="mx-1">&gt;</span>
+            <span class="text-gray-700 font-medium">Gastos</span>
         </nav>
 
         <div class="flex justify-between items-center mb-6">
@@ -25,13 +27,6 @@
                 + Nuevo Gasto
             </a>
         </div>
-
-        @if (TempData["Exito"] != null)
-        {
-            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
-                @TempData["Exito"]
-            </div>
-        }
 
         <div class="overflow-x-auto">
             <table id="gastosTable" class="min-w-full text-base text-left border border-gray-200">

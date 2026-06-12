@@ -85,6 +85,7 @@ namespace AdministracionConsorcios.Controllers
                 var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
 
                 var consorcioId = await _consorcioService.AgregarConsorcio(consorciovm, usuarioId);
+                TempData["Exito"] = $"Consorcio \"{consorciovm.Nombre}\" creado con éxito";
 
                 switch (accion)
                 {
@@ -119,6 +120,7 @@ namespace AdministracionConsorcios.Controllers
             try
             {
                 await _consorcioService.EditarConsorcio(consorcioVm);
+                TempData["Exito"] = $"Consorcio \"{consorcioVm.Nombre}\" actualizado con éxito";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -133,7 +135,10 @@ namespace AdministracionConsorcios.Controllers
         {
             try
             {
+                var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
+                var consorcio = _consorcioService.ObtenerConsorcios(usuarioId).FirstOrDefault(c => c.Id == id);
                 _consorcioService.EliminarConsorcio(id);
+                TempData["Exito"] = $"Consorcio \"{consorcio?.Nombre}\" eliminado con éxito";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

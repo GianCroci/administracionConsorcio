@@ -5,9 +5,9 @@
 <header class="bg-white border-b shadow-sm mb-3">
     <nav class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         
-        <a asp-area="" asp-controller="Home" asp-action="Index"
-               class="text-lg font-semibold text-gray-800">
-            AdministracionConsorcios
+        <a asp-area="" asp-controller="Consorcio" asp-action="Index"
+            class="text-lg font-semibold text-gray-800">
+            Administración de Consorcios
         </a>
 
         <ul class="flex gap-6">
@@ -18,15 +18,19 @@
                 </a>
             </li>
             <li>
-                <a asp-area="" asp-controller="Login" asp-action="Logout"
-                       class="text-gray-600 hover:text-gray-900 transition-colors">
-                    Logout
-                </a>
+                <form asp-controller="Login" asp-action="Logout" method="post" style="display:inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-0 cursor-pointer p-0">
+                        Salir
+                    </button>
+                </form>
             </li>
         </ul>
 
     </nav>
 </header>
+
+<partial name="_Mensajes" />
 
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>

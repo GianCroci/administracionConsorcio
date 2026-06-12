@@ -8,14 +8,14 @@
 <section class="flex items-center justify-center p-10 flex-1 bg-gray-50">
     <div class="bg-white shadow-md rounded-xl p-10 w-full max-w-6xl">
 
-        <nav class="mb-4 text-sm text-blue-600">
-            <a asp-controller="Consorcio" asp-action="Index" class="hover:underline">Mis Consorcios</a>
-            <span> &gt; </span>
-            <span>
-                @Model.ConsorcioNombre
-            </span>
-            <span> &gt; </span>
-            <strong class="text-gray-700">Expensas</strong>
+        <nav class="text-sm text-gray-500 mb-4">
+            <a asp-controller="Consorcio" asp-action="Index"
+               class="hover:underline text-blue-600">Mis Consorcios</a>
+            <span class="mx-1">&gt;</span>
+            <a asp-controller="Expensa" asp-action="Index" asp-route-Id="@Model.ConsorcioId"
+               class="hover:underline text-blue-600">@Model.ConsorcioNombre</a>
+            <span class="mx-1">&gt;</span>
+            <span class="text-gray-700 font-medium">Expensas</span>
         </nav>
 
         <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">Consorcio "@Model.ConsorcioNombre" - Expensas</h1>

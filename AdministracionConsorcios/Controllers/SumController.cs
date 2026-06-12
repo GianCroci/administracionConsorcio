@@ -50,12 +50,10 @@ namespace AdministracionConsorcios.Controllers
                 return View("Crear", vm);
 
             _sumService.AgregarSum(vm);
+            TempData["Exito"] = $"Sum \"{vm.Nombre}\" creada con éxito";
 
             if (accion == "guardar_y_nuevo")
-            {
-                TempData["Exito"] = "Sum creada con éxito";
                 return RedirectToAction("Crear", new { idConsorcio = vm.IdConsorcio });
-            }
 
             return RedirectToAction("Index", new { idConsorcio = vm.IdConsorcio });
         }
@@ -87,6 +85,7 @@ namespace AdministracionConsorcios.Controllers
                 return View("Editar", vm);
 
             _sumService.EditarSum(vm);
+            TempData["Exito"] = $"Sum \"{vm.Nombre}\" actualizada con éxito";
             return RedirectToAction("Index", new { idConsorcio = vm.IdConsorcio });
         }
 
@@ -111,7 +110,9 @@ namespace AdministracionConsorcios.Controllers
         [HttpPost]
         public IActionResult EliminarSum(int id, int idConsorcio)
         {
+            var sum = _sumService.ObtenerSumPorId(id);
             _sumService.EliminarSum(id);
+            TempData["Exito"] = $"Sum \"{sum?.Nombre}\" eliminada con éxito";
             return RedirectToAction("Index", new { idConsorcio = idConsorcio });
         }
     }

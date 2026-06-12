@@ -63,6 +63,7 @@ namespace AdministracionConsorcios.Controllers
 
             var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
             _notificacionService.AgregarNotificacion(vm, usuarioId);
+            TempData["Exito"] = $"Notificación \"{vm.Titulo}\" creada con éxito";
             return RedirectToAction("Index", new { id = vm.IdConsorcio });
         }
 
@@ -87,7 +88,7 @@ namespace AdministracionConsorcios.Controllers
                 FechaCreacion = notificacion.FechaCreacion,
                 FechaEnvio = notificacion.FechaEnvio
             };
-            return View(vm);
+            return View("Editar", vm);
         }
 
         // GET: /Notificacion/Detalle/5
@@ -104,6 +105,7 @@ namespace AdministracionConsorcios.Controllers
             }
 
             _notificacionService.EditarNotificacion(vm);
+            TempData["Exito"] = $"Notificación \"{vm.Titulo}\" actualizada con éxito";
             return RedirectToAction("Index", new { id = vm.IdConsorcio });
         }
 
@@ -138,7 +140,9 @@ namespace AdministracionConsorcios.Controllers
             var consorcio = _consorcioService.ObtenerConsorcios(usuarioId).FirstOrDefault(c => c.Id == idConsorcio);
             if (consorcio == null) return NotFound();
 
+            var notificacion = _notificacionService.ObtenerNotificacionPorId(id);
             _notificacionService.EliminarNotificacion(id);
+            TempData["Exito"] = $"Notificación \"{notificacion?.Titulo}\" eliminada con éxito";
             return RedirectToAction("Index", new { id = idConsorcio });
         }
 

@@ -8,12 +8,7 @@
 <section class="flex items-center justify-center p-7 flex-1 bg-gray-50">
     <div class="bg-white shadow-md rounded-xl p-7 w-full max-w-4x1">
         <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Consorcio "@Model.Nombre" - Editando</h1>
-        @if (TempData["Error"] != null)
-        {
-            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
-                @TempData["Error"]
-            </div>
-        }
+
         <div class="overflow-x-auto">
             <div class="max-w-6xl mx-auto p-6 bg-white shadow-md rounded-md grid grid-cols-1 md:grid-cols-3 gap-6">
 

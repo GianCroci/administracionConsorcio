@@ -63,12 +63,10 @@ namespace AdministracionConsorcios.Controllers
 
             var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
             _reservaSumService.AgregarReserva(reservaVm, usuarioId);
+            TempData["Exito"] = $"Reserva del {reservaVm.FechaReserva:dd/MM/yyyy} creada con éxito";
 
             if (accion == "guardar_y_nuevo")
-            {
-                TempData["Exito"] = "Reserva creada con éxito";
                 return RedirectToAction("Crear", new { id = reservaVm.IdSum });
-            }
 
             return RedirectToAction("Index", new { id = reservaVm.IdSum });
         }
@@ -108,6 +106,7 @@ namespace AdministracionConsorcios.Controllers
                 return NotFound();
 
             _reservaSumService.EditarReserva(reservaVm);
+            TempData["Exito"] = $"Reserva del {reservaVm.FechaReserva:dd/MM/yyyy} actualizada con éxito";
             return RedirectToAction("Index", new { id = reservaVm.IdSum });
         }
 
@@ -137,6 +136,7 @@ namespace AdministracionConsorcios.Controllers
                 return NotFound();
 
             _reservaSumService.EliminarReserva(id);
+            TempData["Exito"] = $"Reserva del {reserva.FechaReserva:dd/MM/yyyy} eliminada con éxito";
             return RedirectToAction("Index", new { id = idSum });
         }
     }

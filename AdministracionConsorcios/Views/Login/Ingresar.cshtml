@@ -20,7 +20,7 @@
 
             <div class="flex flex-col gap-1">
                 <label asp-for="Password" class="text-sm font-medium text-gray-700">Contraseña</label>
-                <input asp-for="Password" placeholder="Contraseña"
+                <input asp-for="Password" type="password" placeholder="Contraseña"
                        class="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 <span asp-validation-for="Password" class="text-red-500 text-xs"></span>
             </div>
@@ -31,6 +31,14 @@
                     class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors mt-2">
                 Ingresar
             </button>
+
+            <div class="text-center mt-4">
+                <span class="text-gray-600">¿No tenés cuenta?</span>
+                <a asp-controller="Login" asp-action="Registrarse"
+                class="text-blue-600 hover:underline ml-1">
+                    Registrarse
+                </a>
+            </div>
 
         </form>
     </div>

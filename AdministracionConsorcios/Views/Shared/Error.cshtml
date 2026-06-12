@@ -1,18 +1,27 @@
 ﻿@model ErrorViewModel
 @{
     ViewData["Title"] = "Error";
+    Layout = "_AnonimoLayout";
+    var statusCode = Model?.RequestId == "404" ? "404" : "";
 }
 
-<div class="container text-center mt-5">
-    <h1 class="text-danger">¡Ups! Algo salió mal.</h1>
-    <h2 class="text-muted fs-5">Ocurrió un error al procesar tu solicitud.</h2>
-
-    <p class="mt-3">
-        Lo sentimos, estamos trabajando para resolverlo. <br />
-        Por favor intentá más tarde.
-    </p>
-
-    <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">
-        Volver al inicio
-    </a>
+<div class="flex items-center justify-center flex-1 bg-gray-50 p-10">
+    <div class="bg-white shadow-md rounded-xl p-10 text-center max-w-lg w-full">
+        @if (statusCode == "404")
+        {
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">404</h1>
+            <h2 class="text-xl text-gray-600 mb-4">Página no encontrada</h2>
+            <p class="text-gray-500 mb-6">La página que buscás no existe o fue movida.</p>
+        }
+        else
+        {
+            <h1 class="text-4xl font-bold text-red-600 mb-4">¡Ups!</h1>
+            <h2 class="text-xl text-gray-600 mb-4">Algo salió mal</h2>
+            <p class="text-gray-500 mb-6">Ocurrió un error al procesar tu solicitud. Intentá más tarde.</p>
+        }
+        <a href="/Consorcio/Index"
+        class="bg-blue-600 text-white font-bold py-2 px-6 rounded-md hover:bg-blue-700 transition-colors">
+            Volver al inicio
+        </a>
+    </div>
 </div>

@@ -75,11 +75,10 @@ namespace AdministracionConsorcios.Controllers
             var nombreArchivo = GuardarArchivo(archivoComprobante);
             _gastoService.AgregarGasto(gastoVm, usuarioId, nombreArchivo);
 
+            TempData["Exito"] = $"Gasto \"{gastoVm.Nombre}\" creado con éxito";
+
             if (accion == "guardar_y_nuevo")
-            {
-                TempData["Exito"] = $"Gasto \"{gastoVm.Nombre}\" creado con éxito";
                 return RedirectToAction("Crear", new { id = gastoVm.IdConsorcio });
-            }
 
             return RedirectToAction("Index", new { id = gastoVm.IdConsorcio });
         }
@@ -135,6 +134,7 @@ namespace AdministracionConsorcios.Controllers
                 nuevoArchivo = GuardarArchivo(archivoComprobante);
 
             _gastoService.EditarGasto(gastoVm, nuevoArchivo);
+            TempData["Exito"] = $"Gasto \"{gastoVm.Nombre}\" actualizado con éxito";
             return RedirectToAction("Index", new { id = gastoVm.IdConsorcio });
         }
 
@@ -171,7 +171,9 @@ namespace AdministracionConsorcios.Controllers
             if (consorcio == null)
                 return NotFound();
 
+            var gasto = _gastoService.ObtenerGastoPorId(id);
             _gastoService.EliminarGasto(id);
+            TempData["Exito"] = $"Gasto \"{gasto?.Nombre}\" eliminado con éxito";
             return RedirectToAction("Index", new { id = idConsorcio });
         }
 

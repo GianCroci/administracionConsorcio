@@ -76,6 +76,7 @@ namespace AdministracionConsorcios.Controllers
                 var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
 
                 await _unidadService.AgregarUnidad(unidad, usuarioId);
+                TempData["Exito"] = $"Unidad \"{unidad.Nombre}\" creada con éxito";
 
                 switch (accion)
                 {
@@ -83,7 +84,6 @@ namespace AdministracionConsorcios.Controllers
                         return RedirectToAction("Index", new { idConsorcio = unidad.IdConsorcio });
 
                     case "guardar_y_nuevo":
-                        TempData["Success"] = "Unidad creada correctamente.";
                         return RedirectToAction("Crear", new { idConsorcio = unidad.IdConsorcio });
 
                     default:
@@ -146,7 +146,7 @@ namespace AdministracionConsorcios.Controllers
                 var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
 
                 await _unidadService.EditarUnidad(unidad, usuarioId);
-
+                TempData["Exito"] = $"Unidad \"{unidad.Nombre}\" actualizada con éxito";
                 return RedirectToAction("Index", new { idConsorcio = unidad.IdConsorcio });
             }
             catch (Exception ex)
@@ -182,9 +182,10 @@ namespace AdministracionConsorcios.Controllers
         public IActionResult EliminarUnidad(int id, int idConsorcio)
         {
             var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
+            var unidad = _unidadService.ObtenerUnidad(id, usuarioId);
 
             _unidadService.EliminarUnidad(id, usuarioId);
-
+            TempData["Exito"] = $"Unidad \"{unidad?.Nombre}\" eliminada con éxito";
             return RedirectToAction("Index", new { idConsorcio });
         }
     }

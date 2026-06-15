@@ -25,9 +25,15 @@ namespace AdministracionConsorcios.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Ingresar(string Email, string Password, string returnUrl = null)
+        public async Task<IActionResult> Ingresar(LoginViewModel vm, string returnUrl = null)
         {
-            var usuario = await _usuarioService.Login(Email, Password);
+
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
+            var usuario = await _usuarioService.Login(vm.Email, vm.Password);
             if (usuario != null)
             {
                 HttpContext.Session.SetString("usuario", usuario.Email);

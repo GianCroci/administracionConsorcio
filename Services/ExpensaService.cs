@@ -1,8 +1,9 @@
 ﻿using Data;
 using DTOs;
-using Microsoft.EntityFrameworkCore;
-using Services.Interfaces;
 using DTOs;
+using Microsoft.EntityFrameworkCore;
+using Model;
+using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,17 +19,17 @@ namespace Services
             _context = context;
         }
 
-        public async Task<List<ExpensaDTO>> GetExpensasPorMes(int consorcioId)
+        public async Task<List<ExpensaDTO>> GetExpensasPorMes(int consorcioId, int usuarioId)
         {
             int cantidadUnidades = await _context.Unidades
-                .Where(u => u.IdConsorcio == consorcioId)
+                .Where(u => u.IdConsorcio == consorcioId )
                 .CountAsync();
 
             if (cantidadUnidades == 0)
                 return new List<ExpensaDTO>();
 
             var expensas = await _context.Gastos
-                .Where(g => g.Consorcio.Id == consorcioId
+                .Where(g => g.Consorcio.Id == consorcioId && g.Consorcio.IdUsuarioCreador == usuarioId
                 && !(g.AnioExpensa == DateTime.Now.Year && g.MesExpensa == DateTime.Now.Month))
                 .GroupBy(g => new { g.AnioExpensa, g.MesExpensa })
                 .Select(g => new ExpensaDTO
@@ -40,18 +41,23 @@ namespace Services
                 })
                 .ToListAsync();
 
+            if (expensas == null)
+                return null;
+
             expensas = expensas
                 .OrderByDescending(e => int.Parse(e.Año))
                 .ThenByDescending(e => int.Parse(e.Mes))
                 .ToList();
 
+            
+
             return expensas;
         }
 
-        public async Task<ExpensaDTO> ObtenerDatosConsorcio(int consorcioId)
+        public async Task<ExpensaDTO> ObtenerDatosConsorcio(int consorcioId, int usuarioId)
         {
             var consorcio = await _context.Consorcios
-                .FirstOrDefaultAsync(c => c.Id == consorcioId);
+                .FirstOrDefaultAsync(c => c.Id == consorcioId && c.IdUsuarioCreador == usuarioId);
 
             if (consorcio == null)
                 return null;
@@ -63,7 +69,7 @@ namespace Services
                 .CountAsync();
 
             decimal gastoMes = await _context.Gastos
-                .Where(g => g.IdConsorcio == consorcioId
+                .Where(g => g.Consorcio.Id == consorcioId && g.Consorcio.IdUsuarioCreador == usuarioId
                 && g.AnioExpensa == ahora.Year
                 && g.MesExpensa == ahora.Month)
                 .SumAsync(g => (decimal?)g.Monto) ?? 0;

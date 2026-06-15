@@ -7,8 +7,8 @@ namespace Services.Interfaces
 {
     public interface IExpensaService
     {
-        Task<List<ExpensaDTO>> GetExpensasPorMes(int consorcioId);
+        Task<List<ExpensaDTO>> GetExpensasPorMes(int consorcioId, int usuarioId);
 
-        Task<ExpensaDTO> ObtenerDatosConsorcio(int consorcioId);
+        Task<ExpensaDTO> ObtenerDatosConsorcio(int consorcioId, int usuarioId);
     }
 }

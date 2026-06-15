@@ -17,7 +17,8 @@ namespace AdministracionConsorcios.Controllers
 
         public async Task<IActionResult> Index(int Id)
         {
-            var consorcio = await _expensaService.ObtenerDatosConsorcio(Id);
+            var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
+            var consorcio = await _expensaService.ObtenerDatosConsorcio(Id, usuarioId);
 
             if (consorcio == null)
                 return NotFound();
@@ -29,8 +30,8 @@ namespace AdministracionConsorcios.Controllers
         public async Task<IActionResult> GetExpensas(int Id)
         {
 
-
-            var expensas = await _expensaService.GetExpensasPorMes(Id);
+            var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
+            var expensas = await _expensaService.GetExpensasPorMes(Id, usuarioId);
             return Json(new { data = expensas });
         }
 

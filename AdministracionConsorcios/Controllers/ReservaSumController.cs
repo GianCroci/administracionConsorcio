@@ -56,19 +56,30 @@ namespace AdministracionConsorcios.Controllers
                 reservaVm.NombreSum = sum?.Nombre;
                 return View("Crear", reservaVm);
             }
+            try
+            {
+                var sumValidar = _sumService.ObtenerSumPorId(reservaVm.IdSum);
+                if (sumValidar == null)
+                    return NotFound();
 
-            var sumValidar = _sumService.ObtenerSumPorId(reservaVm.IdSum);
-            if (sumValidar == null)
-                return NotFound();
+                var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
+                _reservaSumService.AgregarReserva(reservaVm, usuarioId);
+                TempData["Exito"] = $"Reserva del {reservaVm.FechaReserva:dd/MM/yyyy} creada con éxito";
 
-            var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
-            _reservaSumService.AgregarReserva(reservaVm, usuarioId);
-            TempData["Exito"] = $"Reserva del {reservaVm.FechaReserva:dd/MM/yyyy} creada con éxito";
+                if (accion == "guardar_y_nuevo")
+                    return RedirectToAction("Crear", new { id = reservaVm.IdSum });
 
-            if (accion == "guardar_y_nuevo")
-                return RedirectToAction("Crear", new { id = reservaVm.IdSum });
+                return RedirectToAction("Index", new { id = reservaVm.IdSum });
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                var sum = _sumService.ObtenerSumPorId(reservaVm.IdSum);
+                reservaVm.NombreSum = sum?.Nombre;
+                return View("Crear", reservaVm);
+            }
 
-            return RedirectToAction("Index", new { id = reservaVm.IdSum });
+
         }
 
         [HttpGet]
@@ -101,6 +112,9 @@ namespace AdministracionConsorcios.Controllers
                 return View("Editar", reservaVm);
             }
 
+            try
+            {
+
             var reservaValidar = _reservaSumService.ObtenerReservaPorId(reservaVm.Id);
             if (reservaValidar == null)
                 return NotFound();
@@ -108,6 +122,14 @@ namespace AdministracionConsorcios.Controllers
             _reservaSumService.EditarReserva(reservaVm);
             TempData["Exito"] = $"Reserva del {reservaVm.FechaReserva:dd/MM/yyyy} actualizada con éxito";
             return RedirectToAction("Index", new { id = reservaVm.IdSum });
+
+            }
+            catch(Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View("Editar", reservaVm);
+            }
+
         }
 
         public IActionResult Eliminar(int id)

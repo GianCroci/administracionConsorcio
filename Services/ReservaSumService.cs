@@ -38,6 +38,13 @@ namespace Services
 
         public void AgregarReserva(ReservaSumViewModel reservaVm, int usuarioId)
         {
+            
+            if(_context.ReservaSum.Any(r =>
+            r.IdSum == reservaVm.IdSum &&
+            r.FechaReserva == reservaVm.FechaReserva &&
+            r.Turno == (Model.Turno)reservaVm.Turno))
+                throw new Exception("Ya existe una reserva para ese SUM, fecha y turno.");
+
             var reserva = new ReservaSum
             {
                 IdSum = reservaVm.IdSum,
@@ -54,6 +61,13 @@ namespace Services
 
         public void EditarReserva(ReservaSumViewModel reservaVm)
         {
+
+            if (_context.ReservaSum.Any(r =>
+            r.IdSum == reservaVm.IdSum &&
+            r.FechaReserva == reservaVm.FechaReserva &&
+            r.Turno == (Model.Turno)reservaVm.Turno))
+                throw new Exception("Ya existe una reserva para ese SUM, fecha y turno.");
+
             var existente = _context.ReservaSum.FirstOrDefault(r => r.Id == reservaVm.Id);
             if (existente == null)
                 throw new Exception("Reserva no encontrada");

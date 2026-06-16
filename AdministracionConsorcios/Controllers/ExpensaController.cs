@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Model;
 using Services.Interfaces;
 
 namespace AdministracionConsorcios.Controllers
@@ -22,7 +23,8 @@ namespace AdministracionConsorcios.Controllers
 
             if (consorcio == null)
                 return NotFound();
-
+            ViewBag.NombreConsorcio = consorcio.ConsorcioNombre;
+            ViewBag.IdConsorcio = consorcio.ConsorcioId;
             return View(consorcio);
         }
 

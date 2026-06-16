@@ -14,6 +14,7 @@ namespace Model
         [Required]
         public string Nombre { get; set; }
 
+        [Required]
         [MaxLength(500)]
         public string Descripcion { get; set; }
 

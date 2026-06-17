@@ -64,7 +64,9 @@ namespace Services
             if (existente == null)
                 throw new Exception("Consorcio no encontrado");
 
-            var existeNombre = await _context.Consorcios.AnyAsync(c => c.Nombre == consorcioVm.Nombre);
+            var existeNombre = await _context.Consorcios
+                    .AnyAsync(c => c.Nombre == consorcioVm.Nombre &&
+                    c.Id != consorcioVm.Id);
             if (existeNombre)
             {
                 throw new Exception("El consorcio ya se encuentra registrado");
@@ -94,7 +96,7 @@ namespace Services
         {
             var consorcio = _context.Consorcios.Find(id);
 
-            if( consorcio == null )
+            if (consorcio == null)
             {
                 throw new Exception("Consorcio no encontrado");
             }

@@ -21,6 +21,7 @@ namespace DTOs.ViewModels
         public string Nombre { get; set; }
 
         // No requerido según la consigna ("todos los campos son requeridos excepto Descripción")
+        [Required(ErrorMessage = "La descripción es obligatoria")]
         [MaxLength(500, ErrorMessage = "La descripción no puede exceder los 500 caracteres")]
         public string? Descripcion { get; set; }
 

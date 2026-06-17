@@ -12,7 +12,7 @@
             <a asp-controller="Consorcio" asp-action="Index"
                class="hover:underline text-blue-600">Mis Consorcios</a>
             <span class="mx-1">&gt;</span>
-            <a asp-controller="Sum" asp-action="Index" asp-route-idConsorcio="@ViewBag.IdConsorcio"
+            <a asp-controller="Consorcio" asp-action="Editar" asp-route-id="@ViewBag.IdConsorcio"
                class="hover:underline text-blue-600">@ViewBag.NombreConsorcio</a>
             <span class="mx-1">&gt;</span>
             <span class="text-gray-700 font-medium">Sums</span>

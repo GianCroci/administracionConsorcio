@@ -71,9 +71,9 @@
                 </form>
 
                 <div class="flex flex-col items-center justify-center gap-4">
-                    <button type="button" class="w-40 bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">Ver Unidades</button>
-                    <button type="button" class="w-40 bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">Ver Expensas</button>
-                    <button type="button" class="w-40 bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">Ver Gastos</button>
+                    <a asp-controller="Unidad" asp-action="Index" asp-route-idConsorcio="@Model.Id" class="w-40 bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">Ver Unidades</a>
+                    <a asp-controller="Expensa" asp-action="Index" asp-route-id="@Model.Id" class="w-40 bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">Ver Expensas</a>
+                    <a asp-controller="Gasto" asp-action="Index" asp-route-id="@Model.Id" class="w-40 bg-gray-500 text-white font-bold py-2 px-4 rounded-md hover:bg-gray-600 transition-colors">Ver Gastos</a>
                     <a asp-controller="Consorcio" asp-action="Eliminar" asp-route-id="@Model.Id">
                         <button type="submit" class="w-40 bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-3 rounded-md transition-colors">
                             Eliminar

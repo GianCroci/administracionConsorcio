@@ -35,9 +35,15 @@ namespace AdministracionConsorcios.Controllers
         [HttpGet]
         public IActionResult Crear(int idConsorcio)
         {
+            var usuarioId = int.Parse(User.FindFirst("UsuarioId").Value);
+            var consorcio = _consorcioService.ObtenerConsorcios(usuarioId).FirstOrDefault(c => c.Id == idConsorcio);
+            if (consorcio == null)
+                return NotFound();
+
             var vm = new SumViewModel
             {
-                IdConsorcio = idConsorcio
+                IdConsorcio = idConsorcio,
+                NombreConsorcio = consorcio.Nombre
             };
             return View(vm);
         }

@@ -63,7 +63,7 @@ namespace Services
         {
 
             if (_context.ReservaSum.Any(r =>
-            r.IdSum == reservaVm.IdSum &&
+            r.Id != reservaVm.Id &&
             r.FechaReserva == reservaVm.FechaReserva &&
             r.Turno == (Model.Turno)reservaVm.Turno))
                 throw new Exception("Ya existe una reserva para ese SUM, fecha y turno.");

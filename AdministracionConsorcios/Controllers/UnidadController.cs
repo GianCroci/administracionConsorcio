@@ -107,9 +107,9 @@ namespace AdministracionConsorcios.Controllers
                     await _emailService.EnviarAsync(destinatarios, asunto, cuerpoHtml);
                     TempData["Exito"] = $"Unidad \"{unidad.Nombre}\" creada con éxito y se envió la notificación por mail";
                 }
-                catch
+                catch (Exception ex)
                 {
-                    TempData["Exito"] = $"Unidad \"{unidad.Nombre}\" creada con éxito, pero no se pudo enviar el mail";
+                    TempData["Error"] = $"Unidad \"{unidad.Nombre}\" creada, pero falló el envío del mail: {ex.Message}";
                 }
 
                 switch (accion)

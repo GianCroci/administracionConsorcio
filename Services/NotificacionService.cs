@@ -78,7 +78,7 @@ namespace Services
             _context.SaveChanges();
         }
 
-        public async Task EnviarNotificacionAsync(int id, EmailService emailService)
+        public async Task EnviarNotificacionAsync(int id, IEmailService emailService)
         {
             var notificacion = _context.Notificaciones
                 .Include(n => n.Consorcio)

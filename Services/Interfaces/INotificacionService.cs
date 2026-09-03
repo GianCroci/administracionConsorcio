@@ -12,6 +12,6 @@ namespace Services.Interfaces
         void AgregarNotificacion(NotificacionViewModel vm, int usuarioId);
         void EditarNotificacion(NotificacionViewModel vm);
         void EliminarNotificacion(int id);
-        Task EnviarNotificacionAsync(int id, EmailService emailService);
+        Task EnviarNotificacionAsync(int id, IEmailService emailService);
     }
 }

@@ -1,22 +1,26 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Services
 {
-    public class EmailService
+    public class EmailService : IEmailService
     {
         private readonly string _apiKey;
         private readonly string _fromEmail;
         private readonly string _fromName;
+        private readonly ILogger<EmailService> _logger;
 
-        public EmailService(IConfiguration configuration)
+        public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
         {
             _apiKey = configuration["SendGrid:ApiKey"];
             _fromEmail = configuration["SendGrid:FromEmail"];
             _fromName = configuration["SendGrid:FromName"];
+            _logger = logger;
         }
 
         public async Task EnviarAsync(List<string> destinatarios, string asunto, string cuerpoHtml)
@@ -32,7 +36,15 @@ namespace Services
             foreach (var email in destinatarios)
                 msg.AddTo(new EmailAddress(email));
 
-            await client.SendEmailAsync(msg);
+            var response = await client.SendEmailAsync(msg);
+
+            var body = await response.Body.ReadAsStringAsync();
+            _logger.LogInformation("SendGrid status: {Status}, body: {Body}", response.StatusCode, body);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"SendGrid respondió {response.StatusCode}: {body}");
+            }
         }
     }
 }
